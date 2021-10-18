@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LetterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -136,6 +137,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         return Response::download($file, "Format Import LHP2DK.xlsx", $header);
     })->name('template.download.lhp2dk');
+
+    Route::get('template/download/all-sp2dk', function() {
+        $file = public_path()."/template import/Seluruh SP2DK.xlsx";
+        $header = array('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        return Response::download($file, "Seluruh SP2DK.xlsx", $header);
+    })->name('template.download.all-sp2dk');
+
+    Route::get('guide/index', [GuideController::class, 'index'])->name('guide.index');
 
 });
 

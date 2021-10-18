@@ -5,7 +5,7 @@
 @endpush
 
 @section('section-header')
-    <h1>List Pengguna</h1>
+    <h1>List Download Template Import</h1>
 @endsection
 
 @section('content')
@@ -70,6 +70,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="">Download Template Import Seluruh SP2DK</div>
+                            <div class="my-3">
+                                <a href="{{ route('template.download.all-sp2dk') }}" class="btn btn-block btn-primary">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
