@@ -11,7 +11,7 @@
 @endpush
 
 @section('section-header')
-    <h1>List Pengguna</h1>
+    <h1>Daftar Pengguna</h1>
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    List Pengguna
+                    Daftar Pengguna
                     <div class="col-md">
                         <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-plus"></i> Tambah Pengguna

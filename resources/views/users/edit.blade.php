@@ -74,6 +74,10 @@
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" value="" placeholder="">
+                    </div>
+                    <div class="mb-3">
                         <button type="submit" class="btn btn-primary float-right mt-2">
                             <i class="fab fa-telegram-plane"></i> Ubah
                         </button>

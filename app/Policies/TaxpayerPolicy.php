@@ -48,7 +48,7 @@ class TaxpayerPolicy
     public function import(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi";
+        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi" || $position == "Account Representative";
     }
     
 
@@ -75,7 +75,8 @@ class TaxpayerPolicy
     public function delete(User $user, Taxpayer $taxpayer)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Account Representative" || $position == "Kepala Seksi";
+        // return $position == "Account Representative" || $position == "Kepala Seksi";
+        return $position == "Kepala Seksi";
     }
 
     /**

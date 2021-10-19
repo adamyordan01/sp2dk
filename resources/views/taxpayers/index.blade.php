@@ -31,7 +31,8 @@
 @endpush
 
 @section('section-header')
-    <h1>List Wajib Pajak</h1>
+    <h1>Daftar
+         Wajib Pajak</h1>
 @endsection
 
 @section('content')
@@ -39,7 +40,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-md-3">List Wajib Pajak</div>
+                    <div class="col-md-3">Daftar
+                         Wajib Pajak</div>
                     <div class="col-md">
                         @can('create', \App\Models\Taxpayer::class)
                             <a href="{{ route('taxpayer.create') }}" class="btn btn-sm btn-primary">
@@ -250,7 +252,7 @@
             $('input[name="taxpayer_checkbox"]:checked').each(function() {
                 checkedTaxpayers.push($(this).data('id'));
             });
-            alert(checkedTaxpayers);
+            // alert(checkedTaxpayers);
             var url = '{{ route("taxpayer.delete.selected") }}';
 
             if (checkedTaxpayers.length > 0) {

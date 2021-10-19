@@ -203,7 +203,7 @@
             <img alt="image" src="{{ asset('assets') }}/assets/img/avatar/avatar-3.png" class="rounded-circle mr-1">
         @endif --}}
 
-        <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name . " | " . Auth::user()->position->nama_jabatan }}</div></a>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name . " | " . Auth::user()->position->nama_jabatan . " | " . Auth::user()->section->nama_seksi }}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
             {{-- <div class="dropdown-title">{{ "Login dengan jabatan " . Auth::user()->position->nama_jabatan }}</div> --}}
             <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon">

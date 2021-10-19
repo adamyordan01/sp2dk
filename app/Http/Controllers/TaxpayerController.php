@@ -58,7 +58,8 @@ class TaxpayerController extends Controller
                 $edit = url('taxpayer/edit/' . $data->id);
                 $delete = url('taxpayer/delete/'.$data->id);
                 $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-                $button .= '<a href="'.$delete.'" class="btn btn-danger">Hapus</a>';
+                // $button .= '<a href="'.$delete.'" class="btn btn-danger">Hapus</a>';
+                $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
                 return $button;
             })

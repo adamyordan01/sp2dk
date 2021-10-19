@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Section;
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -36,20 +37,39 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $users = User::with(['position', 'section'])->select(['id', 'name', 'nip', 'position_id', 'section_id']);
+        $position = Auth::user()->position->nama_jabatan;
+        if ($position == "Kepala Seksi") {
+            $users = User::with(['position', 'section'])->select(['id', 'name', 'nip', 'position_id', 'section_id'])->where('section_id', Auth::user()->section_id);
 
-        return DataTables::of($users)
-        ->addIndexColumn()
-        ->addColumn('action', function($data){
-            $edit = url('user/edit/' . $data->id);
-            // $delete = url('user/delete/'.$data->id);
-            $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-            $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+            return DataTables::of($users)
+            ->addIndexColumn()
+            ->addColumn('action', function($data){
+                $edit = url('user/edit/' . $data->id);
+                // $delete = url('user/delete/'.$data->id);
+                $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
-            return $button;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);    
+        } elseif ($position == "Operator Console") {
+            $users = User::with(['position', 'section'])->select(['id', 'name', 'nip', 'position_id', 'section_id']);
+
+            return DataTables::of($users)
+            ->addIndexColumn()
+            ->addColumn('action', function($data){
+                $edit = url('user/edit/' . $data->id);
+                // $delete = url('user/delete/'.$data->id);
+                $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+        
     }
 
     public function create()
@@ -115,13 +135,24 @@ class UserController extends Controller
             'position_id' => ['required']
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'nip' => $request->nip,
-            'email' => $request->email,
-            'section_id' => $request->section_id,
-            'position_id' => $request->position_id,
-        ]);
+        if ($request->password) {
+            $user->update([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'email' => $request->email,
+                'section_id' => $request->section_id,
+                'position_id' => $request->position_id,
+                'password' => bcrypt($request->password),
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'email' => $request->email,
+                'section_id' => $request->section_id,
+                'position_id' => $request->position_id,
+            ]);
+        }
 
         return back()->with('success', 'Data pengguna berhasil diubah.');
     }

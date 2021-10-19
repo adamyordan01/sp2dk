@@ -13,7 +13,7 @@ class SectionPolicy
     public function index(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
     }
 
     /**
@@ -48,13 +48,13 @@ class SectionPolicy
     public function create(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
     }
 
     public function edit(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
     }
 
     /**

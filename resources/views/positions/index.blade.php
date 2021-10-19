@@ -5,7 +5,7 @@
 @endpush
 
 @section('section-header')
-    <h1>List Jabatan</h1>
+    <h1>Daftar Jabatan</h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <div class="col-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-md-3">List Jabatan</div>
+                    <div class="col-md-3">Daftar Jabatan</div>
                     <div class="col-md">
                         <a href="{{ route('position.create') }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-plus"></i> Tambah Jabatan

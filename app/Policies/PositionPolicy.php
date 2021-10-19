@@ -13,7 +13,8 @@ class PositionPolicy
     public function index(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
+        // return $position == "Operator Console" || $position == "Kepala Seksi";
     }
 
     /**
@@ -48,13 +49,15 @@ class PositionPolicy
     public function create(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
+        // return $position == "Operator Console" || $position == "Kepala Seksi";
     }
 
     public function edit(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Operator Console" || $position == "Kepala Seksi";
+        return $position == "Operator Console";
+        // return $position == "Operator Console" || $position == "Kepala Seksi";
     }
 
     /**

@@ -45,7 +45,7 @@ class LetterController extends Controller
             return view('letters.index', [
                 'letters' => $letters
             ]);
-        } elseif ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki") {
+        } elseif ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
             $letters = Letter::orderBy('tahun', 'desc')->get();
 
             return view('letters.index', [
@@ -64,14 +64,14 @@ class LetterController extends Controller
     public function letterData()
     {
         $position = Auth::user()->position->nama_jabatan;
-        if ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki") {
+        if ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
             $letters = Letter::with(['taxpayer.user.section'])->get();
             // $letters = Letter::orderBy('tahun', 'desc')->get();
             return DataTables::of($letters)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
                     $edit = url('letter/edit/' . $data->id);
-                    $delete = url('letter/delete/'.$data->id);
+                    // $delete = url('letter/delete/'.$data->id);
                     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
                     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 

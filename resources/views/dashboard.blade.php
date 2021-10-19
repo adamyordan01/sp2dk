@@ -819,7 +819,7 @@
         @endforeach
     @endif
 
-    @if (Auth::user()->position->nama_jabatan == "Kepala Suki" || Auth::user()->position->nama_jabatan == "Pelaksana Suki" || Auth::user()->position->nama_jabatan == "Pelaksana Seksi" || Auth::user()->position->nama_jabatan == "Operator Console")
+    @if (Auth::user()->position->nama_jabatan == "Kepala Suki" || Auth::user()->position->nama_jabatan == "Pelaksana Suki" || Auth::user()->position->nama_jabatan == "Pelaksana Seksi" || Auth::user()->position->nama_jabatan == "Operator Console" || Auth::user()->position->nama_jabatan == "Kepala Seksi Penjamin Kualitas Data")
 
         <div class="row">
             <div class="col-md-12">

@@ -44,10 +44,10 @@
                                 <td>Kepala Suki</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
@@ -89,11 +89,11 @@
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
@@ -145,13 +145,13 @@
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
@@ -199,10 +199,10 @@
                                 <td>Kepala Suki</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                             </tr>
                             <tr>
                                 <td>AR</td>
@@ -244,10 +244,10 @@
                                 <td>Kepala Suki</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                             </tr>
                             <tr>
                                 <td>AR</td>
@@ -289,10 +289,10 @@
                                 <td>Kepala Suki</td>
                             </tr>
                             <tr>
-                                <td>Pelaksana SUKI</td>
+                                <td>Pelaksana Suki</td>
                             </tr>
                             <tr>
-                                <td>Kepala Seksi</td>
+                                <td>Kepala Seksi Pengawasan</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>

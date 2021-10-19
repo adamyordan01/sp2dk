@@ -49,7 +49,7 @@ class LetterPolicy
     public function import(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi";
+        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi" || $position == "Account Representative";
     }
 
     public function firstAuthorize(User $user)
@@ -75,13 +75,13 @@ class LetterPolicy
     {
         // return $user->position->nama_jabatan != "Kepala Kantor";
         $position = $user->position->nama_jabatan;
-        return $position != "Kepala Kantor" && $position != "Operator Console";
+        return $position != "Kepala Kantor" && $position != "Operator Console" && $position != "Kepala Seksi Penjamin Kualitas Data";
     }
 
     public function delete(User $user, Letter $letter)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Account Representative" || $position == "Pelaksana Seksi";
+        return $position == "Kepala Seksi" || $position == "Operator Console";
     }
 
     /**

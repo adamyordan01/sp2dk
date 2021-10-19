@@ -1,4 +1,4 @@
-@extends('layouts.base', ['title' => 'MoSART - List SP2DK'])
+@extends('layouts.base', ['title' => 'MoSART - Daftar SP2DK'])
 
 @push('style')
     <link rel="stylesheet" href="https://nightly.datatables.net/css/dataTables.bootstrap5.min.css">
@@ -38,7 +38,7 @@
 @endpush
 
 @section('section-header')
-    <h1>List SP2DK</h1>
+    <h1>Daftar SP2DK</h1>
 @endsection
 
 @section('content')
@@ -46,7 +46,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-md-3">List SP2DK</div>
+                    <div class="col-md-3">Daftar SP2DK</div>
                     <div class="col-md">
                         @can('create', \App\Models\Letter::class)
                             <a href="{{ route('letter.create') }}" class="btn btn-sm btn-primary">
@@ -383,7 +383,7 @@
             $('input[name="letter_checkbox"]:checked').each(function() {
                 checkedLetters.push($(this).data('id'));
             });
-            alert(checkedLetters);
+            // alert(checkedLetters);
             var url = '{{ route("letter.delete.selected") }}';
 
             if (checkedLetters.length > 0) {
