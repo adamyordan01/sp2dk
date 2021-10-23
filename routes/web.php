@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/letter/export', [LetterController::class, 'export'])->name('letter.export');
     Route::get('/letter/export/ar', [LetterController::class, 'exportAr'])->name('letter.export-ar');
     Route::get('/letter/export/kk', [LetterController::class, 'exportKk'])->name('letter.export-kk');
+    Route::get('letter/get-tax-payer', [LetterController::class, 'getTaxPayers'])->name('letter.get-tax-payer');
+
     
     Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
@@ -88,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/user/delete', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/user/get-users', [UserController::class, 'getUsers'])->name('user.get-users');
+    Route::get('user/form-import', [UserController::class, 'formImport'])->name('user.form-import');
+    Route::post('/user/import', [UserController::class, 'import'])->name('user.import');
 
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
@@ -144,6 +148,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         return Response::download($file, "Seluruh SP2DK.xlsx", $header);
     })->name('template.download.all-sp2dk');
+
+    Route::get('template/download/register-user', function() {
+        $file = public_path()."/template import/Format Registrasi User.xlsx";
+        $header = array('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        return Response::download($file, "Format Registrasi User.xlsx", $header);
+    })->name('template.download.register-user');
 
     Route::get('guide/index', [GuideController::class, 'index'])->name('guide.index');
 

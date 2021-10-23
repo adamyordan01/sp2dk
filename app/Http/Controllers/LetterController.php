@@ -45,13 +45,13 @@ class LetterController extends Controller
             return view('letters.index', [
                 'letters' => $letters
             ]);
-        } elseif ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
+        } elseif ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Subbag" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
             $letters = Letter::orderBy('tahun', 'desc')->get();
 
             return view('letters.index', [
                 'letters' => $letters
             ]);
-        } elseif ($position == "Kepala Suki" || $position == "Pelaksana Suki") {
+        } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki") {
             $letters = Letter::orderBy('tahun', 'desc')->get();
 
             return view('letters.index', [
@@ -64,22 +64,22 @@ class LetterController extends Controller
     public function letterData()
     {
         $position = Auth::user()->position->nama_jabatan;
-        if ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Suki" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
+        if ($position == "Kepala Kantor" || $position == "Kepala Seksi Penjamin Kualitas Data") {
             $letters = Letter::with(['taxpayer.user.section'])->get();
             // $letters = Letter::orderBy('tahun', 'desc')->get();
             return DataTables::of($letters)
                 ->addIndexColumn()
-                ->addColumn('action', function($data){
-                    $edit = url('letter/edit/' . $data->id);
-                    // $delete = url('letter/delete/'.$data->id);
-                    $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-                    $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+                // ->addColumn('action', function($data){
+                //     $edit = url('letter/edit/' . $data->id);
+                //     // $delete = url('letter/delete/'.$data->id);
+                //     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                //     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
-                    return $button;
-                })
-                ->addColumn('checkbox', function($data){
-                    return '<input type="checkbox" name="letter_checkbox" data-id="'.$data->id.'">';
-                })
+                //     return $button;
+                // })
+                // ->addColumn('checkbox', function($data){
+                //     return '<input type="checkbox" name="letter_checkbox" data-id="'.$data->id.'">';
+                // })
                 ->editColumn('tanggal_sp2dk', function ($letter) {
                     return $letter->tanggal_sp2dk->format('Y/m/d');
                 })
@@ -119,7 +119,7 @@ class LetterController extends Controller
                 ->editColumn('tanggal_dspp', function ($letter) {
                     return $letter->tanggal_dspp ? $letter->tanggal_dspp->format('Y/m/d') : '';
                 })
-                ->rawColumns(['action', 'checkbox'])
+                // ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         } elseif (Auth::user()->position->nama_jabatan == "Kepala Seksi") {
             $letters = Auth::user()->letterTaxpayerKasi()->with(['taxpayer.user.section'])->get();
@@ -183,7 +183,88 @@ class LetterController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
                     $edit = url('letter/edit/' . $data->id);
-                    $delete = url('letter/delete/'.$data->id);
+                    // $delete = url('letter/delete/'.$data->id);
+                    $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                    // $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+
+                    return $button;
+                })
+                ->editColumn('tanggal_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y/m/d');
+                })
+                ->editColumn('tahun_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y');
+                })
+                ->editColumn('tanggal_kirim_suki', function ($letter) {
+                    return $letter->tanggal_kirim_suki ? $letter->tanggal_kirim_suki->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kirim_pos', function ($letter) {
+                    return $letter->tanggal_kirim_pos ? $letter->tanggal_kirim_pos->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kempos', function ($letter) {
+                    return $letter->tanggal_kempos ? $letter->tanggal_kempos->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_telpon_wp', function ($letter) {
+                    return $letter->tanggal_telpon_wp ? $letter->tanggal_telpon_wp->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_konseling', function ($letter) {
+                    return $letter->tanggal_konseling ? $letter->tanggal_konseling->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_ba_tidak_hadir', function ($letter) {
+                    return $letter->tanggal_ba_tidak_hadir ? $letter->tanggal_ba_tidak_hadir->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_visit', function ($letter) {
+                    return $letter->tanggal_visit ? $letter->tanggal_visit->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_lhp2dk', function ($letter) {
+                    return $letter->tanggal_lhp2dk ? $letter->tanggal_lhp2dk->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_setor', function ($letter) {
+                    return $letter->tanggal_setor ? $letter->tanggal_setor->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_usul_pemeriksaan', function ($letter) {
+                    return $letter->tanggal_usul_pemeriksaan ? $letter->tanggal_usul_pemeriksaan->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_dspp', function ($letter) {
+                    return $letter->tanggal_dspp ? $letter->tanggal_dspp->format('Y/m/d') : '';
+                })
+                // ->rawColumns(['action', 'checkbox'])
+                ->rawColumns(['action'])
+                ->make(true);
+        } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
+            $letters = Letter::with(['taxpayer.user.section'])->get();
+            return DataTables::of($letters)
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    $edit = url('letter/edit/' . $data->id);
+                    $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                    return $button;
+                })
+                ->editColumn('tanggal_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y/m/d');
+                })
+                ->editColumn('tahun_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y');
+                })
+                ->editColumn('tanggal_kirim_suki', function ($letter) {
+                    return $letter->tanggal_kirim_suki ? $letter->tanggal_kirim_suki->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kirim_pos', function ($letter) {
+                    return $letter->tanggal_kirim_pos ? $letter->tanggal_kirim_pos->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kempos', function ($letter) {
+                    return $letter->tanggal_kempos ? $letter->tanggal_kempos->format('Y/m/d') : '';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        } elseif ($position == "Operator Console") {
+            $letters = Letter::with(['taxpayer.user.section'])->get();
+            // $letters = Letter::orderBy('tahun', 'desc')->get();
+            return DataTables::of($letters)
+                ->addIndexColumn()
+                ->addColumn('action', function($data){
+                    $edit = url('letter/edit/' . $data->id);
+                    // $delete = url('letter/delete/'.$data->id);
                     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
                     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
@@ -462,7 +543,7 @@ class LetterController extends Controller
             return view('letters.show', [
                 'letter' => $letter
             ]);
-        } elseif (Auth::user()->position->nama_jabatan == "Kepala Suki") {
+        } elseif (Auth::user()->position->nama_jabatan == "Kepala Subbag") {
             return view('letters.show', [
                 'letter' => $letter
             ]);
@@ -483,7 +564,7 @@ class LetterController extends Controller
     {
         $position = Auth::user()->position->nama_jabatan;
 
-        if ($position == "Kepala Suki" || $position == "Pelaksana Suki") {
+        if ($position == "Kepala Subbag" || $position == "Pelaksana Suki") {
             $letter->update([
                 'tanggal_kirim_suki' => $request->tanggal_kirim_suki,
                 'tanggal_kirim_pos' => $request->tanggal_kirim_pos,
@@ -629,5 +710,33 @@ class LetterController extends Controller
         Letter::whereIn('id', $letters_id)->delete();
 
         return response()->json(['code' => 1, 'message' => 'Data sp2dk berhasil dihapus dari database.', $letters_id]);
+    }
+
+    public function getTaxPayers(Request $request)
+    {
+        $search = $request->search;
+
+        if ($search == '') {
+            $taxpayers = Taxpayer::orderby('npwp', 'desc')
+                        ->select('id', 'npwp', 'nama')
+                        ->limit(5)
+                        ->get();
+        } else {
+            $taxpayers = Taxpayer::orderby('npwp', 'desc')
+                        ->select('id', 'npwp', 'nama')
+                        ->where('nama', 'LIKE', "%$search%")
+                        ->orWhere('npwp', 'like', "%$search%")
+                        ->limit(5)
+                        ->get();
+        }
+
+        $response = array();
+        foreach ($taxpayers as $taxpayer) {
+            $response[] = array(
+                'id' => $taxpayer->id,
+                'text' => $taxpayer->nama . " - " . $taxpayer->npwp
+            );
+        }
+        return response()->json($response);
     }
 }

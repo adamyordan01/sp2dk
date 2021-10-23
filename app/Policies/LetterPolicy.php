@@ -49,7 +49,7 @@ class LetterPolicy
     public function import(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi" || $position == "Account Representative";
+        return $position == "Kepala Seksi" || $position == "Operator Console" || $position == "Pelaksana Seksi" || $position == "Account Representative" || $position == "Kepala Subbag" || $position == "Pelaksana Suki";
     }
 
     public function firstAuthorize(User $user)

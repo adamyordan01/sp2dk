@@ -3,7 +3,8 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('assets') }}/assets/css/select2.min.css" />
     <link rel="stylesheet" href="{{ asset('/') }}assets/vendors/choices.js/choices.min.css" />
-    <link rel="stylesheet" href="{{ asset('/') }}assets/vendors/datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="{{ asset('/') }}assets/assets/js/datepicker/bootstrap-datepicker.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
 @section('section-header')
@@ -46,10 +47,14 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Nama WP</label>
                         <div class="form-group">
-                            <select class="choices form-control select2 " name="taxpayer_id">
+                            {{-- <select class="choices form-control select2 " name="taxpayer_id">
                                 @foreach ($taxpayers as $taxpayer)
                                     <option value="{{ $taxpayer->id }}">{{ $taxpayer->npwp }} - {{ $taxpayer->nama }}</option>
                                 @endforeach
+                            </select> --}}
+                            <select name="taxpayer_id" id="select-taxpayer" class="form-control">
+                                <option value="">Pilih Wajib Pajak</option>
+
                             </select>
                         </div>
                     </div>
@@ -202,16 +207,47 @@
 @push('scripts')
     <script src="{{ asset('assets') }}/assets/js/page/select2.full.min.js"></script>
     <script src="{{ asset('/') }}assets/vendors/choices.js/choices.min.js"></script>
-    <script src="{{ asset('/') }}assets/vendors/datepicker/bootstrap-datepicker.js"></script>
-    <script src="{{ asset('/') }}assets/js/pages/form-element-select.js"></script>
-    <script src="{{ asset('/') }}assets/vendors/maskjs/jquery.mask.js"></script>
+    <script src="{{ asset('/') }}assets/assets/js/datepicker/bootstrap-datepicker.js"></script>
+    {{-- <script src="{{ asset('/') }}assets/js/pages/form-element-select.js"></script> --}}
+    <script src="{{ asset('/') }}assets/assets/js/maskjs/jquery.mask.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     <script>
+        $.ajaxSetup({
+             headers:{
+                 'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+             }
+        });
+
+        $(document).ready(function() {
+            $('#select-taxpayer').select2({
+                ajax: {
+                    url: "{{ route('letter.get-tax-payer') }}",
+                    type: 'get',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return{
+                            // _token: csrf_token,
+                            search: params.term
+                        }
+                    },
+                    processResults: function(response){
+                        return{
+                            results: response
+                        }
+                    }, 
+                    cache: true
+                }
+            })
+        })
+
         $('*#datepicker').datepicker({
             format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         $('*#money').mask("#.##0", {reverse: true});
+
     </script>
 @endpush

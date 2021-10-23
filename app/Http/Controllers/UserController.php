@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 // use App\DataTables\UsersDataTable;
+
+use App\Imports\UserImport;
 use App\Models\User;
 use App\Models\Section;
 use App\Models\Position;
@@ -70,6 +72,31 @@ class UserController extends Controller
             ->make(true);
         }
         
+    }
+
+    public function formImport()
+    {
+        $this->authorize('create', User::class);
+
+        return view('users.form-import');
+    }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        $file = $request->file('file')->store('import');
+
+        $import = new UserImport;
+        $import->import($file);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+
+        return redirect()->back()->with('success', 'Data Pengguna berhasil di import.');
     }
 
     public function create()

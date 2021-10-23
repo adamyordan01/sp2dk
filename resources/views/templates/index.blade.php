@@ -79,6 +79,15 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="">Download Template Registrasi Pengguna</div>
+                            <div class="my-3">
+                                <a href="{{ route('template.download.register-user') }}" class="btn btn-block btn-primary">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

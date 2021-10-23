@@ -11,7 +11,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $sections = Section::all();
-        $positions = Position::where('nama_jabatan', '!=', 'Kepala Kantor')->Where('nama_jabatan', '!=', 'Kepala Suki')->get();
+        $positions = Position::where('nama_jabatan', '!=', 'Kepala Kantor')->Where('nama_jabatan', '!=', 'Kepala Subbag')->get();
 
         return view('user-informations.edit', [
             'sections' => $sections,

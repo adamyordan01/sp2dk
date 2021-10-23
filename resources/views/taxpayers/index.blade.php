@@ -8,6 +8,11 @@
             table-layout: auto !important;
         }
 
+        table, td {
+            border: 1px solid gray !important;
+            border-collapse: collapse !important;
+        }
+
         td.first {
             min-width: 250px !important;
         }
@@ -70,7 +75,7 @@
                     @endif
 
                     <div class="table-responsive">
-                        <table class="table data-table">
+                        <table class="table data-table table-bordered">
                             <thead>
                                 <tr>
                                     <th class="third">

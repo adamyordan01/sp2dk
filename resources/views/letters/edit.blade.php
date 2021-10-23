@@ -3,7 +3,7 @@
 @push('style')
     <link rel="stylesheet" href="{{ asset('assets') }}/assets/css/select2.min.css" />    
     <link rel="stylesheet" href="{{ asset('/') }}assets/vendors/choices.js/choices.min.css" />
-    <link rel="stylesheet" href="{{ asset('/') }}assets/vendors/datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="{{ asset('/') }}assets/assets/js/datepicker/bootstrap-datepicker.min.css" />
 @endpush
 
 @section('section-header')
@@ -209,9 +209,9 @@
 @push('scripts')
     <script src="{{ asset('assets') }}/assets/js/page/select2.full.min.js"></script>
     <script src="{{ asset('/') }}assets/vendors/choices.js/choices.min.js"></script>
-    <script src="{{ asset('/') }}assets/vendors/datepicker/bootstrap-datepicker.js"></script>
+    <script src="{{ asset('/') }}assets/assets/js/datepicker/bootstrap-datepicker.js"></script>
     <script src="{{ asset('/') }}assets/js/pages/form-element-select.js"></script>
-    <script src="{{ asset('/') }}assets/vendors/maskjs/jquery.mask.js"></script>
+    <script src="{{ asset('/') }}assets/assets/js/maskjs/jquery.mask.js"></script>
     
     <script>
         $('*#datepicker').datepicker({

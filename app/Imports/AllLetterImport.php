@@ -42,7 +42,8 @@ SkipsOnFailure
 
     public function model(array $row)
     {
-        $taxpayer = Taxpayer::where('npwp', $row['npwp'])->where('nama', $row['nama'])->first();
+        // $taxpayer = Taxpayer::where('npwp', $row['npwp'])->where('nama', $row['nama'])->first();
+        $taxpayer = Taxpayer::where('npwp', $row['npwp'])->first();
 
         // $tanggal_kirim_suki = empty($row['tgl_kirim_ke_suki']) ? $row['tgl_kirim_ke_suki'] : Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tgl_kirim_ke_suki']));
         // Yang bawah yang bener

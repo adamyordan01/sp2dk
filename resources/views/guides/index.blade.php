@@ -41,7 +41,7 @@
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
@@ -85,7 +85,7 @@
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
@@ -139,7 +139,7 @@
                                 <td class="checklist">P</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
@@ -196,7 +196,7 @@
                                 <td>Kepala Kantor</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
@@ -241,7 +241,7 @@
                                 <td>Kepala Kantor</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
@@ -286,7 +286,7 @@
                                 <td>Kepala Kantor</td>
                             </tr>
                             <tr>
-                                <td>Kepala Suki</td>
+                                <td>Kepala Subbag</td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>

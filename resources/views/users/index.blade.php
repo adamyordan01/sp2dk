@@ -24,6 +24,9 @@
                         <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-plus"></i> Tambah Pengguna
                         </a>
+                        <a href="{{ route('user.form-import') }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-upload"></i> Import Data Pengguna (Excel)
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
