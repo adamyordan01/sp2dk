@@ -19,4 +19,9 @@ class Taxpayer extends Model
     {
         return $this->belongsTo(User::class, 'kasi_id');
     }
+
+    public function pelaksana()
+    {
+        return $this->belongsTo(User::class, 'pelaksana_id');
+    }
 }

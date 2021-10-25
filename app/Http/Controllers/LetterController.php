@@ -177,6 +177,62 @@ class LetterController extends Controller
                 })
                 ->rawColumns(['action', 'checkbox'])
                 ->make(true);
+        } elseif ($position == "Pelaksana Seksi") {
+            $letters = Auth::user()->letterTaxpayerPelaksana()->with(['taxpayer.user.section'])->get();
+            return DataTables::of($letters)
+                ->addIndexColumn()
+                // ->addColumn('action', function($data){
+                //     $edit = url('letter/edit/' . $data->id);
+                //     $delete = url('letter/delete/'.$data->id);
+                //     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                //     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+
+                //     return $button;
+                // })
+                // ->addColumn('checkbox', function($data){
+                //     return '<input type="checkbox" name="letter_checkbox" data-id="'.$data->id.'">';
+                // })
+                ->editColumn('tanggal_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y/m/d');
+                })
+                ->editColumn('tahun_sp2dk', function ($letter) {
+                    return $letter->tanggal_sp2dk->format('Y');
+                })
+                ->editColumn('tanggal_kirim_suki', function ($letter) {
+                    return $letter->tanggal_kirim_suki ? $letter->tanggal_kirim_suki->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kirim_pos', function ($letter) {
+                    return $letter->tanggal_kirim_pos ? $letter->tanggal_kirim_pos->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_kempos', function ($letter) {
+                    return $letter->tanggal_kempos ? $letter->tanggal_kempos->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_telpon_wp', function ($letter) {
+                    return $letter->tanggal_telpon_wp ? $letter->tanggal_telpon_wp->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_konseling', function ($letter) {
+                    return $letter->tanggal_konseling ? $letter->tanggal_konseling->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_ba_tidak_hadir', function ($letter) {
+                    return $letter->tanggal_ba_tidak_hadir ? $letter->tanggal_ba_tidak_hadir->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_visit', function ($letter) {
+                    return $letter->tanggal_visit ? $letter->tanggal_visit->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_lhp2dk', function ($letter) {
+                    return $letter->tanggal_lhp2dk ? $letter->tanggal_lhp2dk->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_setor', function ($letter) {
+                    return $letter->tanggal_setor ? $letter->tanggal_setor->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_usul_pemeriksaan', function ($letter) {
+                    return $letter->tanggal_usul_pemeriksaan ? $letter->tanggal_usul_pemeriksaan->format('Y/m/d') : '';
+                })
+                ->editColumn('tanggal_dspp', function ($letter) {
+                    return $letter->tanggal_dspp ? $letter->tanggal_dspp->format('Y/m/d') : '';
+                })
+                // ->rawColumns(['action', 'checkbox'])
+                ->make(true);
         } elseif (Auth::user()->position->nama_jabatan == "Account Representative") {
             $letters = Auth::user()->letterTaxpayer()->with(['taxpayer.user.section'])->get();
             return DataTables::of($letters)
@@ -231,7 +287,7 @@ class LetterController extends Controller
                 // ->rawColumns(['action', 'checkbox'])
                 ->rawColumns(['action'])
                 ->make(true);
-        } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
+        } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki") {
             $letters = Letter::with(['taxpayer.user.section'])->get();
             return DataTables::of($letters)
                 ->addIndexColumn()

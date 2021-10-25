@@ -7,25 +7,45 @@
 @section('content')
     @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi" || Auth::user()->position->nama_jabatan == "Account Representative")
         <div class="row">
-            <div class="col-md-8">
-                <form action="" class="mb-4">
-                    <div class="form-row align-items-center">
-                        <div class="col-auto">
-                            <label for="">Filter Tahun</label>
+            <div class="col-md-12">
+                <div class="form-row mb-5">
+                    <form action="">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label for="">Filter SP2DK</label>
+                            </div>
+                            <div class="col-auto">
+                                <select name="year" class="form-control" id="">
+                                    <option value="" {{ request()->year == '' ? 'selected' : '' }}>all</option>
+                                    @foreach ($filters as $filter)
+                                        <option value="{{ $filter->year }}" {{ request()->year == $filter->year ? 'selected' : '' }}>{{ $filter->year }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <select name="year" class="form-control" id="">
-                                <option value="" {{ request()->year == '' ? 'selected' : '' }}>all</option>
-                                @foreach ($filters as $filter)
-                                    <option value="{{ $filter->year }}" {{ request()->year == $filter->year ? 'selected' : '' }}>{{ $filter->year }}</option>
-                                @endforeach
-                            </select>
+                    </form>
+                    <form action="" class="ml-4">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label for="">Filter LHP2DK</label>
+                            </div>
+                            <div class="col-auto">
+                                <select name="lhp2dk" class="form-control" id="">
+                                    <option value="" {{ request()->lhp2dk == '' ? 'selected' : '' }}>all</option>
+                                    @foreach ($filtersLhp2dk as $filterLhp2dk)
+                                        <option value="{{ $filterLhp2dk->lhp2dk }}" {{ request()->lhp2dk == $filterLhp2dk->lhp2dk ? 'selected' : '' }}>{{ $filterLhp2dk->lhp2dk }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">Go</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     @endif    

@@ -49,8 +49,28 @@ class TaxpayerController extends Controller
 
     public function taxpayerData()
     {
-        if (Auth::user()->position->nama_jabatan == "Account Representative") {
+        $position = Auth::user()->position->nama_jabatan;
+        if ($position == "Account Representative") {
             $taxpayers = Taxpayer::with(['user.section', 'kasi'])->where('user_id', Auth::id())->get();
+
+            return DataTables::of($taxpayers)
+            ->addIndexColumn()
+            ->addColumn('action', function($data){
+                $edit = url('taxpayer/edit/' . $data->id);
+                // $delete = url('taxpayer/delete/'.$data->id);
+                $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+                // $button .= '<a href="'.$delete.'" class="btn btn-danger">Hapus</a>';
+                // $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+
+                return $button;
+            })
+            // ->addColumn('checkbox', function($data){
+            //     return '<input type="checkbox" name="taxpayer_checkbox" data-id="'.$data->id.'">';
+            // })
+            ->rawColumns(['action'])
+            ->make(true);
+        } elseif ($position == "Kepala Seksi") {
+            $taxpayers = Taxpayer::with(['user.section', 'kasi'])->where('kasi_id', Auth::id())->get();
 
             return DataTables::of($taxpayers)
             ->addIndexColumn()
@@ -58,7 +78,6 @@ class TaxpayerController extends Controller
                 $edit = url('taxpayer/edit/' . $data->id);
                 $delete = url('taxpayer/delete/'.$data->id);
                 $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-                // $button .= '<a href="'.$delete.'" class="btn btn-danger">Hapus</a>';
                 $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
                 return $button;
@@ -68,8 +87,26 @@ class TaxpayerController extends Controller
             })
             ->rawColumns(['action', 'checkbox'])
             ->make(true);
-        } elseif (Auth::user()->position->nama_jabatan == "Kepala Seksi") {
-            $taxpayers = Taxpayer::with(['user.section', 'kasi'])->where('kasi_id', Auth::id())->get();
+        } elseif ($position == "Pelaksana Seksi") {
+            $taxpayers = Taxpayer::with(['user.section', 'kasi'])->where('pelaksana_id', Auth::id())->get();
+
+            return DataTables::of($taxpayers)
+            ->addIndexColumn()
+            // ->addColumn('action', function($data){
+            //     $edit = url('taxpayer/edit/' . $data->id);
+            //     $delete = url('taxpayer/delete/'.$data->id);
+            //     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+            //     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+
+            //     return $button;
+            // })
+            // ->addColumn('checkbox', function($data){
+            //     return '<input type="checkbox" name="taxpayer_checkbox" data-id="'.$data->id.'">';
+            // })
+            // ->rawColumns(['action', 'checkbox'])
+            ->make(true);
+        } elseif ($position == "Operator Console") {
+            $taxpayers = Taxpayer::with(['user.section', 'kasi'])->get();
 
             return DataTables::of($taxpayers)
             ->addIndexColumn()
@@ -91,18 +128,18 @@ class TaxpayerController extends Controller
 
             return DataTables::of($taxpayers)
             ->addIndexColumn()
-            ->addColumn('action', function($data){
-                $edit = url('taxpayer/edit/' . $data->id);
-                $delete = url('taxpayer/delete/'.$data->id);
-                $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-                $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
+            // ->addColumn('action', function($data){
+            //     $edit = url('taxpayer/edit/' . $data->id);
+            //     $delete = url('taxpayer/delete/'.$data->id);
+            //     $button = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
+            //     $button .= '<button class="btn btn-danger" data-id="'. $data->id .'" id="deleteButton">Hapus</button>';
 
-                return $button;
-            })
-            ->addColumn('checkbox', function($data){
-                return '<input type="checkbox" name="taxpayer_checkbox" data-id="'.$data->id.'">';
-            })
-            ->rawColumns(['action', 'checkbox'])
+            //     return $button;
+            // })
+            // ->addColumn('checkbox', function($data){
+            //     return '<input type="checkbox" name="taxpayer_checkbox" data-id="'.$data->id.'">';
+            // })
+            // ->rawColumns(['action', 'checkbox'])
             ->make(true);
         }
     }
