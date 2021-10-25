@@ -76,7 +76,7 @@ class TaxpayerPolicy
     {
         $position = $user->position->nama_jabatan;
         // return $position == "Account Representative" || $position == "Kepala Seksi";
-        return $position == "Kepala Seksi";
+        return $position == "Kepala Seksi" || $position == "Operator Console";
     }
 
     /**

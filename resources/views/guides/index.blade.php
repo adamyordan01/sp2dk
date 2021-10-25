@@ -42,9 +42,11 @@
                             </tr>
                             <tr>
                                 <td>Kepala Subbag</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Kepala Seksi Pengawasan</td>
@@ -56,6 +58,7 @@
                             </tr>
                             <tr>
                                 <td>Pelaksana Seksi</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>OC</td>
@@ -75,6 +78,8 @@
                                 <th>User</th>
                                 <th class="header">List Wajib Pajak</th>
                                 <th class="header">Tambah Wajib Pajak</th>
+                                <th class="header">Import Wajib Pajak</th>
+                                <th class="header">Import Update Wajib Pajak</th>
                                 <th class="header">Edit Wajib Pajak</th>
                                 <th class="header">Hapus Wajib Pajak</th>
                             </tr>
@@ -83,17 +88,34 @@
                             <tr>
                                 <td>Kepala Kantor</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Kepala Subbag</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Kepala Seksi Pengawasan</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
@@ -105,13 +127,25 @@
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Seksi</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>OC</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist"></td>
                                 <td class="checklist">P</td>
                             </tr>
                         </tbody>
@@ -129,6 +163,7 @@
                                 <th>User</th>
                                 <th class="header">List SP2DK</th>
                                 <th class="header">Tambah SP2DK</th>
+                                <th class="header">Import SP2DK</th>
                                 <th class="header">Edit SP2DK</th>
                                 <th class="header">Hapus SP2DK</th>
                             </tr>
@@ -137,21 +172,30 @@
                             <tr>
                                 <td>Kepala Kantor</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Kepala Subbag</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Suki</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Kepala Seksi Pengawasan</td>
+                                <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
@@ -163,13 +207,22 @@
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>Pelaksana Seksi</td>
                                 <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist"></td>
+                                <td class="checklist"></td>
                             </tr>
                             <tr>
                                 <td>OC</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
+                                <td class="checklist">P</td>
                                 <td class="checklist">P</td>
                             </tr>
                         </tbody>
