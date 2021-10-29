@@ -67,25 +67,27 @@ class User extends Authenticatable
         return $this->hasMany(Taxpayer::class);
     }
 
+    public function letterTaxpayerKasi()
+    {
+        return $this->hasManyThrough(Letter::class,
+         Taxpayer::class,
+         'kasi_id', 
+         'taxpayer_id',
+         'id', 
+         'id'
+        );
+    }
+
     public function letterTaxpayer()
     {
         return $this->hasManyThrough(Letter::class,
          Taxpayer::class, 
          'user_id', //foreign_key taxpayers
          'taxpayer_id', //foreign_key letters
-         'id', //primary_key letters
+         'id', //primary_key users
          'id'); //primary_key taxpayers
     }
 
-    public function letterTaxpayerKasi()
-    {
-        return $this->hasManyThrough(Letter::class,
-         Taxpayer::class, 
-         'kasi_id', 
-         'taxpayer_id',
-         'id', 
-         'id');
-    }
 
     public function letterTaxpayerPelaksana()
     {

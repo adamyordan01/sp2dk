@@ -12,7 +12,7 @@
                     <form action="">
                         <div class="form-row align-items-center">
                             <div class="col-auto">
-                                <label for="">Filter SP2DK</label>
+                                <label for="">Filter Tahun Pembuatan SP2DK</label>
                             </div>
                             <div class="col-auto">
                                 <select name="year" class="form-control" id="">
@@ -30,7 +30,7 @@
                     <form action="" class="ml-4">
                         <div class="form-row align-items-center">
                             <div class="col-auto">
-                                <label for="">Filter LHP2DK</label>
+                                <label for="">Filter Tahun Pembuatan LHP2DK</label>
                             </div>
                             <div class="col-auto">
                                 <select name="lhp2dk" class="form-control" id="">

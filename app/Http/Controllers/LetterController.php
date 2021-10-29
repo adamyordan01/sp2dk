@@ -28,28 +28,230 @@ class LetterController extends Controller
         $position = Auth::user()->position->nama_jabatan;
 
         if (Auth::user()->position->nama_jabatan == "Account Representative") {
-            $letters = Auth::user()->letterTaxpayer;
+            // $letters = Auth::user()->letterTaxpayer;
+            $id = Auth::id();
+            $section_id = Auth::user()->section_id;
+            $sp2dk_years = DB::select("
+                SELECT YEAR
+                    ( l.tanggal_sp2dk ) AS year
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = '$id'
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    YEAR ( l.tanggal_sp2dk )
+                ORDER BY
+                    YEAR ( l.tanggal_sp2dk ) ASC
+            ");
+
+            $tax_years = DB::select("
+                SELECT
+                    l.tahun 
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = '$id'
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    l.tahun 
+                ORDER BY
+                    l.tahun ASC
+            ");
 
             return view('letters.index', [
-                'letters' => $letters
+                // 'letters' => $letters
+                'sp2dk_years' => $sp2dk_years,
+                'tax_years' => $tax_years,
             ]);
-        } elseif (Auth::user()->position->nama_jabatan == "Kepala Seksi") {
-            $letters = Auth::user()->letterTaxpayerKasi;
+        } elseif ($position == "Kepala Seksi") {
+            $section_id = Auth::user()->section_id;
+            $users = DB::select("
+                SELECT
+                    u.`name` AS name,
+                    sections.nama_seksi
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    u.`name`,
+                    sections.nama_seksi
+            ");
+            $sp2dk_years = DB::select("
+                SELECT
+                    YEAR ( l.tanggal_sp2dk ) AS year
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    YEAR ( l.tanggal_sp2dk ) 
+                ORDER BY
+                    YEAR ( l.tanggal_sp2dk ) ASC
+            ");
+
+            $tax_years = DB::select("
+                SELECT
+                    l.tahun
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    l.tahun
+                ORDER BY
+                    l.tahun ASC
+            ");
+            // $letters = Auth::user()->letterTaxpayerKasi;
             // $letters = Auth::user()->letterTaxpayerKasi()->with(['taxpayer.user'])->get();
             return view('letters.index', [
-                'letters' => $letters
+                'users' => $users,
+                'sp2dk_years' => $sp2dk_years,
+                'tax_years' => $tax_years,
             ]);
         } elseif (Auth::user()->position->nama_jabatan == "Pelaksana Seksi") {
-            $letters = Auth::user()->letterTaxpayerPelaksana;
+            $section_id = Auth::user()->section_id;
+            $users = DB::select("
+                SELECT
+                    u.`name` AS name,
+                    sections.nama_seksi
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    u.`name`,
+                    sections.nama_seksi
+            ");
+            $sp2dk_years = DB::select("
+                SELECT
+                    YEAR ( l.tanggal_sp2dk ) AS year
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    YEAR ( l.tanggal_sp2dk ) 
+                ORDER BY
+                    YEAR ( l.tanggal_sp2dk ) ASC
+            ");
+
+            $tax_years = DB::select("
+                SELECT
+                    l.tahun
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                    AND u.section_id = '$section_id'
+                GROUP BY
+                    l.tahun
+                ORDER BY
+                    l.tahun ASC
+            ");
 
             return view('letters.index', [
-                'letters' => $letters
+                'users' => $users,
+                'sp2dk_years' => $sp2dk_years,
+                'tax_years' => $tax_years,
             ]);
+            // $letters = Auth::user()->letterTaxpayerPelaksana;
         } elseif ($position == "Kepala Kantor" || $position == "Operator Console" || $position == "Kepala Subbag" || $position == "Pelaksana Suki" || $position == "Kepala Seksi Penjamin Kualitas Data") {
-            $letters = Letter::orderBy('tahun', 'desc')->get();
-
+            // $letters = Letter::orderBy('tahun', 'desc')->get();
+            $ar_users = DB::select("
+                SELECT
+                    u.`name` AS ar
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2
+                GROUP BY
+                    u.`name`,
+                    sections.nama_seksi
+            ");
+            $sections = DB::select("
+                SELECT
+                    sections.nama_seksi 
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                GROUP BY
+                    sections.nama_seksi 
+                ORDER BY
+                    sections.nama_seksi ASC
+            ");
+            $sp2dk_years = DB::select("
+                SELECT YEAR
+                    ( l.tanggal_sp2dk ) AS year 
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                GROUP BY
+                    YEAR ( l.tanggal_sp2dk ) 
+                ORDER BY
+                    YEAR ( l.tanggal_sp2dk ) DESC
+            ");
+            $tax_years = DB::select("
+                SELECT
+                    l.tahun AS tahun 
+                FROM
+                    users AS u
+                    JOIN taxpayers AS t ON t.user_id = u.id
+                    JOIN letters AS l ON l.taxpayer_id = t.id
+                    JOIN sections ON u.section_id = sections.id 
+                WHERE
+                    u.position_id > 2 
+                GROUP BY
+                    l.tahun 
+                ORDER BY
+                    l.tahun DESC
+            ");
             return view('letters.index', [
-                'letters' => $letters
+                'ar_users' => $ar_users,
+                'sections' => $sections,
+                'sp2dk_years' => $sp2dk_years,
+                'tax_years' => $tax_years,
             ]);
         } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki") {
             $letters = Letter::orderBy('tahun', 'desc')->get();
@@ -65,7 +267,7 @@ class LetterController extends Controller
     {
         $position = Auth::user()->position->nama_jabatan;
         if ($position == "Kepala Kantor" || $position == "Kepala Seksi Penjamin Kualitas Data") {
-            $letters = Letter::with(['taxpayer.user.section'])->get();
+            $letters = Letter::with(['taxpayer.user.section']);
             // $letters = Letter::orderBy('tahun', 'desc')->get();
             return DataTables::of($letters)
                 ->addIndexColumn()
@@ -122,7 +324,9 @@ class LetterController extends Controller
                 // ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         } elseif (Auth::user()->position->nama_jabatan == "Kepala Seksi") {
-            $letters = Auth::user()->letterTaxpayerKasi()->with(['taxpayer.user.section'])->get();
+            // $letters = Auth::user()->letterTaxpayerKasi()->with(['taxpayer.user.section'])->get();
+            $letters = Auth::user()->letterTaxpayerKasi()->with(['taxpayer.user.section'])->select('letters.*');
+            // $letters = Letter::with(['taxpayer.user.section', 'letterTaxpayerKasi']);
             return DataTables::of($letters)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
@@ -178,7 +382,7 @@ class LetterController extends Controller
                 ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         } elseif ($position == "Pelaksana Seksi") {
-            $letters = Auth::user()->letterTaxpayerPelaksana()->with(['taxpayer.user.section'])->get();
+            $letters = Auth::user()->letterTaxpayerPelaksana()->with(['taxpayer.user.section'])->select('letters.*');
             return DataTables::of($letters)
                 ->addIndexColumn()
                 // ->addColumn('action', function($data){
@@ -234,7 +438,7 @@ class LetterController extends Controller
                 // ->rawColumns(['action', 'checkbox'])
                 ->make(true);
         } elseif (Auth::user()->position->nama_jabatan == "Account Representative") {
-            $letters = Auth::user()->letterTaxpayer()->with(['taxpayer.user.section'])->get();
+            $letters = Auth::user()->letterTaxpayer()->with(['taxpayer.user.section'])->select('letters.*');
             return DataTables::of($letters)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
@@ -288,7 +492,7 @@ class LetterController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         } elseif ($position == "Kepala Subbag" || $position == "Pelaksana Suki") {
-            $letters = Letter::with(['taxpayer.user.section'])->get();
+            $letters = Letter::with(['taxpayer.user.section']);
             return DataTables::of($letters)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
@@ -314,7 +518,7 @@ class LetterController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         } elseif ($position == "Operator Console") {
-            $letters = Letter::with(['taxpayer.user.section'])->get();
+            $letters = Letter::with(['taxpayer.user.section']);
             // $letters = Letter::orderBy('tahun', 'desc')->get();
             return DataTables::of($letters)
                 ->addIndexColumn()
@@ -485,6 +689,117 @@ class LetterController extends Controller
         return redirect()->back()->with('success', 'Berhasil import data lhp2dk.');
     }
 
+    
+    public function getTaxPayers(Request $request)
+    {
+        $search = $request->search;
+        $position = Auth::user()->position->nama_jabatan;
+        if ($position == "Account Representative") {
+            if ($search == '') {
+                $taxpayers = Taxpayer::where('user_id', Auth::id())->orderby('nama', 'asc')
+                            ->select('id', 'npwp', 'nama')
+                            ->limit(5)
+                            ->get();
+            } else {
+                $taxpayers = Taxpayer::where('user_id', Auth::id())->orderby('nama', 'asc')
+                        ->select('id', 'npwp', 'nama')
+                        ->where('nama', 'LIKE', "%$search%")
+                        ->orWhere('npwp', 'like', "%$search%")
+                        ->limit(5)
+                        ->get();
+            }
+            $response = array();
+            foreach ($taxpayers as $taxpayer) {
+                $response[] = array(
+                    'id' => $taxpayer->id,
+                    'text' => $taxpayer->nama . " - " . $taxpayer->npwp
+                );
+            }
+            return response()->json($response);
+        } elseif ($position == "Pelaksana Seksi") {
+            if ($search == '') {
+                $taxpayers = Taxpayer::where('pelaksana_id', Auth::id())->orderby('nama', 'asc')
+                            ->select('id', 'npwp', 'nama')
+                            ->limit(5)
+                            ->get();
+            } else {
+                $taxpayers = Taxpayer::where('pelaksana_id', Auth::id())->orderby('nama', 'asc')
+                        ->select('id', 'npwp', 'nama')
+                        ->where('nama', 'LIKE', "%$search%")
+                        ->orWhere('npwp', 'like', "%$search%")
+                        ->limit(5)
+                        ->get();
+            }
+            $response = array();
+            foreach ($taxpayers as $taxpayer) {
+                $response[] = array(
+                    'id' => $taxpayer->id,
+                    'text' => $taxpayer->nama . " - " . $taxpayer->npwp
+                );
+            }
+            return response()->json($response);
+        } elseif ($position == "Kepala Seksi") {
+            if ($search == '') {
+                $taxpayers = Taxpayer::where('kasi_id', Auth::id())->orderby('nama', 'asc')
+                            ->select('id', 'npwp', 'nama')
+                            ->limit(5)
+                            ->get();
+            } else {
+                $taxpayers = Taxpayer::where('kasi_id', Auth::id())->orderby('nama', 'asc')
+                        ->select('id', 'npwp', 'nama')
+                        ->where('nama', 'LIKE', "%$search%")
+                        ->orWhere('npwp', 'like', "%$search%")
+                        ->limit(5)
+                        ->get();
+            }
+            $response = array();
+            foreach ($taxpayers as $taxpayer) {
+                $response[] = array(
+                    'id' => $taxpayer->id,
+                    'text' => $taxpayer->nama . " - " . $taxpayer->npwp
+                );
+            }
+            return response()->json($response);
+        } elseif ($position == "Operator Console") {
+            if ($search == '') {
+                $taxpayers = Taxpayer::orderby('nama', 'asc')
+                            ->select('id', 'npwp', 'nama')
+                            ->limit(5)
+                            ->get();
+            } else {
+                $taxpayers = Taxpayer::orderby('nama', 'asc')
+                        ->select('id', 'npwp', 'nama')
+                        ->where('nama', 'LIKE', "%$search%")
+                        ->orWhere('npwp', 'like', "%$search%")
+                        ->limit(5)
+                        ->get();
+            }
+            $response = array();
+            foreach ($taxpayers as $taxpayer) {
+                $response[] = array(
+                    'id' => $taxpayer->id,
+                    'text' => $taxpayer->nama . " - " . $taxpayer->npwp
+                );
+            }
+            return response()->json($response);
+        }
+        // if ($search == '') {
+        //     $taxpayers = Taxpayer::orderby('npwp', 'desc')
+        //                 ->select('id', 'npwp', 'nama')
+        //                 ->limit(5)
+        //                 ->get();
+        // } else {
+        //     $taxpayers = Taxpayer::orderby('npwp', 'desc')
+        //                 ->select('id', 'npwp', 'nama')
+        //                 ->where('nama', 'LIKE', "%$search%")
+        //                 ->orWhere('npwp', 'like', "%$search%")
+        //                 ->limit(5)
+        //                 ->get();
+        // }
+
+        
+    }
+
     public function create()
     {
         $this->authorize('create', Letter::class);
@@ -585,7 +900,7 @@ class LetterController extends Controller
         $this->authorize('update', $letter);
 
         // $letter = Letter::find($id);
-        $taxpayers = Taxpayer::all();
+        $taxpayers = Taxpayer::find($letter->taxpayer_id);
 
         return view('letters.edit', [
             'letter' => $letter,
@@ -768,31 +1083,4 @@ class LetterController extends Controller
         return response()->json(['code' => 1, 'message' => 'Data sp2dk berhasil dihapus dari database.', $letters_id]);
     }
 
-    public function getTaxPayers(Request $request)
-    {
-        $search = $request->search;
-
-        if ($search == '') {
-            $taxpayers = Taxpayer::orderby('npwp', 'desc')
-                        ->select('id', 'npwp', 'nama')
-                        ->limit(5)
-                        ->get();
-        } else {
-            $taxpayers = Taxpayer::orderby('npwp', 'desc')
-                        ->select('id', 'npwp', 'nama')
-                        ->where('nama', 'LIKE', "%$search%")
-                        ->orWhere('npwp', 'like', "%$search%")
-                        ->limit(5)
-                        ->get();
-        }
-
-        $response = array();
-        foreach ($taxpayers as $taxpayer) {
-            $response[] = array(
-                'id' => $taxpayer->id,
-                'text' => $taxpayer->nama . " - " . $taxpayer->npwp
-            );
-        }
-        return response()->json($response);
-    }
 }

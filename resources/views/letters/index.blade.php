@@ -41,7 +41,7 @@
         }
 
         th.six {
-            min-width: 130px !important;
+            min-width: 20px !important;
         }
     </style>
 @endpush
@@ -148,12 +148,40 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>
+                                            <select data-column="4" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter AR</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select data-column="5" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Seksi</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->nama_seksi }}">{{ $user->nama_seksi }}</option>
+                                                @endforeach
+                                            </select>  
+                                        </td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="8" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun SP2DK</option>
+                                                @foreach ($sp2dk_years as $sp2dk_year)
+                                                    <option value="{{ $sp2dk_year->year }}">{{ $sp2dk_year->year }}</option>
+                                                @endforeach
+                                            </select>  
+                                        </td>
+                                        <td>
+                                            <select data-column="9" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun Pajak</option>
+                                                @foreach ($tax_years as $tax_year)
+                                                    <option value="{{ $tax_year->tahun }}">{{ $tax_year->tahun }}</option>
+                                                @endforeach
+                                            </select>  
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -209,11 +237,11 @@
             });
 
             $(document).ready(function() {
-                $('.data-table').DataTable({
+                let table = $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -221,11 +249,11 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
                         {data: 'checkbox', name:'checkbox', 'orderable': false, 'searchable': false},
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -259,28 +287,6 @@
                         {data: 'action', name:'action', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false},
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([3,4,5,8,9]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
-
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
-
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
-
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
                         this.checked = false;
@@ -289,14 +295,11 @@
                     $('button#deleteAllButton').addClass('d-none');
                 });
 
-                // $('.filter-select').change(function() {
-                //     table.column($(this).data('column'))
-                //     .search($(this).val())
-                //     .draw();
-                // });
-
-                
-
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
+                });
             });
 
             $(document).on('click', '#deleteButton', function() {
@@ -490,7 +493,14 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="3" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter AR</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -553,8 +563,8 @@
                 $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -562,10 +572,10 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -598,27 +608,27 @@
                         {data: 'tanggal_dspp', name:'tanggal_dspp'},
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([2,3,4,7,8]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                    // initComplete: function () {
+                    //     this.api().columns([2,3,4,7,8]).every( function () {
+                    //         var column = this;
+                    //     console.log(this.index())
+                    //         var select = $('<select class="form-control"><option value="">All</option></select>')
+                    //         .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
+                    //             .on( 'change', function () {
+                    //                 var val = $.fn.dataTable.util.escapeRegex(
+                    //                     $(this).val()
+                    //                 );
 
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
+                    //                 column
+                    //                     .search( val ? '^'+val+'$' : '', true, false )
+                    //                     .draw();
+                    //             } );
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
+                    //         column.data().unique().sort().each( function ( d, j ) {
+                    //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                    //         } );
+                    //     } );
+                    // }
 
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
@@ -628,11 +638,11 @@
                     $('button#deleteAllButton').addClass('d-none');
                 });
 
-                // $('.filter-select').change(function() {
-                //     table.column($(this).data('column'))
-                //     .search($(this).val())
-                //     .draw();
-                // });
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
+                });
 
                 
 
@@ -824,8 +834,22 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="7" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun SP2DK</option>
+                                                @foreach ($sp2dk_years as $sp2dk_year)
+                                                    <option value="{{ $sp2dk_year->year }}">{{ $sp2dk_year->year }}</option>
+                                                @endforeach
+                                            </select>  
+                                        </td>
+                                        <td>
+                                            <select data-column="8" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun Pajak</option>
+                                                @foreach ($tax_years as $tax_year)
+                                                    <option value="{{ $tax_year->tahun }}">{{ $tax_year->tahun }}</option>
+                                                @endforeach
+                                            </select>  
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -881,11 +905,11 @@
             });
 
             $(document).ready(function() {
-                $('.data-table').DataTable({
+                let table = $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -893,10 +917,10 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -930,27 +954,27 @@
                         {data: 'action', name:'action', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false},
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([2,3,4,7,8]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                    // initComplete: function () {
+                    //     this.api().columns([2,3,4,7,8]).every( function () {
+                    //         var column = this;
+                    //     console.log(this.index())
+                    //         var select = $('<select class="form-control"><option value="">All</option></select>')
+                    //         .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
+                    //             .on( 'change', function () {
+                    //                 var val = $.fn.dataTable.util.escapeRegex(
+                    //                     $(this).val()
+                    //                 );
 
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
+                    //                 column
+                    //                     .search( val ? '^'+val+'$' : '', true, false )
+                    //                     .draw();
+                    //             } );
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
+                    //         column.data().unique().sort().each( function ( d, j ) {
+                    //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                    //         } );
+                    //     } );
+                    // }
 
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
@@ -958,6 +982,12 @@
                     });
                     $('input[name="main_checkbox"]').prop('checked', false);
                     $('button#deleteAllButton').addClass('d-none');
+                });
+
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
                 });
             });
 
@@ -1016,12 +1046,40 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>
+                                            <select data-column="3" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter AR</option>
+                                                @foreach ($ar_users as $ar_user)
+                                                    <option value="{{ $ar_user->ar }}">{{ $ar_user->ar }}</option>
+                                                @endforeach
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <select data-column="4" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Seksi</option>
+                                                @foreach ($sections as $section)
+                                                    <option value="{{ $section->nama_seksi }}">{{ $section->nama_seksi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="7" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun SP2DK</option>
+                                                @foreach ($sp2dk_years as $sp2dk_year)
+                                                    <option value="{{ $sp2dk_year->year }}">{{ $sp2dk_year->year }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select data-column="8" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun Pajak</option>
+                                                @foreach ($tax_years as $tax_year)
+                                                    <option value="{{ $tax_year->tahun }}">{{ $tax_year->tahun }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1058,11 +1116,11 @@
             });
 
             $(document).ready(function() {
-                $('.data-table').DataTable({
+                let table = $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -1070,10 +1128,10 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -1088,27 +1146,27 @@
                         {data: 'action', name:'action', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false}
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([2,3,4,7,8]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                    // initComplete: function () {
+                    //     this.api().columns([2,3,4,7,8]).every( function () {
+                    //         var column = this;
+                    //     console.log(this.index())
+                    //         var select = $('<select class="form-control"><option value="">All</option></select>')
+                    //         .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
+                    //             .on( 'change', function () {
+                    //                 var val = $.fn.dataTable.util.escapeRegex(
+                    //                     $(this).val()
+                    //                 );
 
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
+                    //                 column
+                    //                     .search( val ? '^'+val+'$' : '', true, false )
+                    //                     .draw();
+                    //             } );
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
+                    //         column.data().unique().sort().each( function ( d, j ) {
+                    //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                    //         } );
+                    //     } );
+                    // }
 
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
@@ -1116,6 +1174,11 @@
                     });
                     $('input[name="main_checkbox"]').prop('checked', false);
                     $('button#deleteAllButton').addClass('d-none');
+                });
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
                 });
             });
 
@@ -1200,12 +1263,40 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>
+                                            <select data-column="4" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter AR</option>
+                                                @foreach ($ar_users as $ar_user)
+                                                    <option value="{{ $ar_user->ar }}">{{ $ar_user->ar }}</option>
+                                                @endforeach
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <select data-column="5" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Seksi</option>
+                                                @foreach ($sections as $section)
+                                                    <option value="{{ $section->nama_seksi }}">{{ $section->nama_seksi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="8" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun SP2DK</option>
+                                                @foreach ($sp2dk_years as $sp2dk_year)
+                                                    <option value="{{ $sp2dk_year->year }}">{{ $sp2dk_year->year }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select data-column="9" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun Pajak</option>
+                                                @foreach ($tax_years as $tax_year)
+                                                    <option value="{{ $tax_year->tahun }}">{{ $tax_year->tahun }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1261,11 +1352,11 @@
             });
 
             $(document).ready(function() {
-                $('.data-table').DataTable({
+                let table = $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -1273,11 +1364,11 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
                         {data: 'checkbox', name:'checkbox', 'orderable': false, 'searchable': false},
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -1311,27 +1402,27 @@
                         {data: 'action', name:'action', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false},
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([3,4,5,8,9]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                    // initComplete: function () {
+                    //     this.api().columns([3,4,5,8,9]).every( function () {
+                    //         var column = this;
+                    //     console.log(this.index())
+                    //         var select = $('<select class="form-control"><option value="">All</option></select>')
+                    //         .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
+                    //             .on( 'change', function () {
+                    //                 var val = $.fn.dataTable.util.escapeRegex(
+                    //                     $(this).val()
+                    //                 );
 
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
+                    //                 column
+                    //                     .search( val ? '^'+val+'$' : '', true, false )
+                    //                     .draw();
+                    //             } );
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
+                    //         column.data().unique().sort().each( function ( d, j ) {
+                    //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                    //         } );
+                    //     } );
+                    // }
 
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
@@ -1341,14 +1432,11 @@
                     $('button#deleteAllButton').addClass('d-none');
                 });
 
-                // $('.filter-select').change(function() {
-                //     table.column($(this).data('column'))
-                //     .search($(this).val())
-                //     .draw();
-                // });
-
-                
-
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
+                });
             });
 
             $(document).on('click', '#deleteButton', function() {
@@ -1527,12 +1615,40 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>
+                                            <select data-column="3" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter AR</option>
+                                                @foreach ($ar_users as $ar_user)
+                                                    <option value="{{ $ar_user->ar }}">{{ $ar_user->ar }}</option>
+                                                @endforeach
+                                            </select> 
+                                        </td>
+                                        <td>
+                                            <select data-column="4" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Seksi</option>
+                                                @foreach ($sections as $section)
+                                                    <option value="{{ $section->nama_seksi }}">{{ $section->nama_seksi }}</option>
+                                                @endforeach
+                                            </select> 
+                                        </td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            <select data-column="7" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun SP2DK</option>
+                                                @foreach ($sp2dk_years as $sp2dk_year)
+                                                    <option value="{{ $sp2dk_year->year }}">{{ $sp2dk_year->year }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select data-column="8" class="form-control filter-select" id="filter-select">
+                                                <option value="">Filter Tahun Pajak</option>
+                                                @foreach ($tax_years as $tax_year)
+                                                    <option value="{{ $tax_year->tahun }}">{{ $tax_year->tahun }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1587,11 +1703,11 @@
             });
 
             $(document).ready(function() {
-                $('.data-table').DataTable({
+                let table = $('.data-table').DataTable({
                     dom: 'lBfrtip',
                     aLengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "all"]
+                        [20, 10, 35, 50, 100, 200],
+                        [20, 10, 35, 50, 100, 200]
                     ],
                     buttons: ['copy', 'excel', {
                         extend: 'pdfHtml5',
@@ -1599,11 +1715,11 @@
                         pageSize: 'LEGAL'
                     }],
                     processing: true,
-                    serverside: true,
+                    serverSide: true,
                     ajax: "{{ route('letter.data') }}",
                     columns: [
                         // {data: 'checkbox', name:'checkbox', 'orderable': false, 'searchable': false},
-                        {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                        {data: 'DT_RowIndex', name:'letters.id'},
                         {data: 'taxpayer.npwp', name:'taxpayer.npwp'},
                         {data: 'taxpayer.nama', name:'taxpayer.nama'},
                         {data: 'taxpayer.user.name', name:'taxpayer.user.name'},
@@ -1637,27 +1753,27 @@
                         // {data: 'action', name:'action', 'orderable': false, 'searchable': false, 'exportable': false, 'printable': false},
                     ],
 
-                    initComplete: function () {
-                        this.api().columns([2,3,4,7,8]).every( function () {
-                            var column = this;
-                        console.log(this.index())
-                            var select = $('<select class="form-control"><option value="">All</option></select>')
-                            .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
-                                .on( 'change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex(
-                                        $(this).val()
-                                    );
+                    // initComplete: function () {
+                    //     this.api().columns([2,3,4,7,8]).every( function () {
+                    //         var column = this;
+                    //     console.log(this.index())
+                    //         var select = $('<select class="form-control"><option value="">All</option></select>')
+                    //         .appendTo(  $('tfoot td:eq(' + this.index()  + ')') )
+                    //             .on( 'change', function () {
+                    //                 var val = $.fn.dataTable.util.escapeRegex(
+                    //                     $(this).val()
+                    //                 );
 
-                                    column
-                                        .search( val ? '^'+val+'$' : '', true, false )
-                                        .draw();
-                                } );
+                    //                 column
+                    //                     .search( val ? '^'+val+'$' : '', true, false )
+                    //                     .draw();
+                    //             } );
 
-                            column.data().unique().sort().each( function ( d, j ) {
-                                select.append( '<option value="'+d+'">'+d+'</option>' )
-                            } );
-                        } );
-                    }
+                    //         column.data().unique().sort().each( function ( d, j ) {
+                    //             select.append( '<option value="'+d+'">'+d+'</option>' )
+                    //         } );
+                    //     } );
+                    // }
 
                 }).on('draw', function() {
                     $('input[name="letter_checkbox"]').each(function() {
@@ -1665,6 +1781,12 @@
                     });
                     $('input[name="main_checkbox"]').prop('checked', false);
                     $('button#deleteAllButton').addClass('d-none');
+                });
+                
+                $('.filter-select').change(function() {
+                    table.column($(this).data('column'))
+                    .search($(this).val())
+                    .draw();
                 });
             });
         </script>

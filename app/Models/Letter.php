@@ -28,6 +28,16 @@ class Letter extends Model
          'id'); //primary_key 
     }
 
+    public function letterTaxpayerKasi()
+    {
+        return $this->hasManyThrough(Letter::class,
+         Taxpayer::class, 
+         'kasi_id', 
+         'taxpayer_id',
+         'id', 
+         'id');
+    }
+
     // public function letterTaxpayers()
     // {
     //     return $this->hasMany(Letter::class, Taxpayer::class);

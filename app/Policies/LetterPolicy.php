@@ -55,7 +55,7 @@ class LetterPolicy
     public function firstAuthorize(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Account Representative" || $position == "Pelaksana Seksi";
+        return $position == "Kepala Seksi" || $position == "Account Representative" || $position == "Pelaksana Seksi" || $position == "Operator Console";
     }
 
     public function secondAuthorize(User $user)
@@ -68,14 +68,14 @@ class LetterPolicy
     public function thirdAuthorize(User $user)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Kepala Seksi" || $position == "Account Representative";
+        return $position == "Kepala Seksi" || $position == "Account Representative" || $position == "Operator Console";
     }
 
     public function update(User $user, Letter $letter)
     {
         // return $user->position->nama_jabatan != "Kepala Kantor";
         $position = $user->position->nama_jabatan;
-        return $position != "Kepala Kantor" && $position != "Operator Console" && $position != "Kepala Seksi Penjamin Kualitas Data";
+        return $position != "Kepala Kantor" && $position != "Kepala Seksi Penjamin Kualitas Data";
     }
 
     public function delete(User $user, Letter $letter)

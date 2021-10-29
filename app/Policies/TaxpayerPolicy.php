@@ -62,7 +62,7 @@ class TaxpayerPolicy
     public function update(User $user, Taxpayer $taxpayer)
     {
         $position = $user->position->nama_jabatan;
-        return $position == "Account Representative" || $position == "Kepala Seksi";
+        return $position == "Account Representative" || $position == "Kepala Seksi" || $position == "Operator Console";
     }
 
     /**

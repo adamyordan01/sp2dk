@@ -66,6 +66,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="">Nama Pelaksana Seksi</label>
+                            <select class="form-control select2" name="pelaksana_id">
+                                @foreach ($pelaksana_seksi as $pelaksana)
+                                    <option value="{{ $pelaksana->id }}"  {{ $pelaksana->id == $taxpayer->pelaksana_id ? 'selected' : '' }}>{{ $pelaksana->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary float-right">
                                 <i class="fab fa-telegram-plane"></i> Ubah
                             </button>
