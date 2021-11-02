@@ -65,7 +65,7 @@
         
             @endif
             {{-- end of logic --}}
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header mb-3">
                     <div class="col-md-6">
                         <a href="{{ route('letter.index') }}">
@@ -92,7 +92,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -101,11 +101,11 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header mb-3">
-                    {{-- <div class="col-md-6">
+                    <div class="col-md-6">
                         <a href="{{ route('letter.index') }}">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
-                    </div> --}}
+                    </div>
                     <div class="col-md-6">Import Data SP2DK</div>
                 </div>
                 <div class="card-body">

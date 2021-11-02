@@ -4,8 +4,16 @@
     <h1>Dashboard</h1>
 @endsection
 
+@push('style')
+    <style>
+        .card-body {
+            font-size: 15px !important;
+        }
+    </style>
+@endpush
+
 @section('content')
-    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi" || Auth::user()->position->nama_jabatan == "Account Representative")
+    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi" || Auth::user()->position->nama_jabatan == "Account Representative" || Auth::user()->position->nama_jabatan == "Kepala Seksi Penjamin Kualitas Data")
         <div class="row">
             <div class="col-md-12">
                 <div class="form-row mb-5">
@@ -238,7 +246,7 @@
         </div>
     @endif
 
-    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor")
+    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi Penjamin Kualitas Data")
         <div class="row">
             @foreach ($lettersKk as $letterKk)
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
@@ -687,7 +695,7 @@
         @endforeach
     @endif
 
-    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor")
+    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi Penjamin Kualitas Data")
         @foreach ($lettersKasi as $letterKasi)
             <div class="row">
                 <div class="col-md-12">
@@ -763,7 +771,7 @@
         @endforeach
     @endif
 
-    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor")
+    @if (Auth::user()->position->nama_jabatan == "Kepala Kantor" || Auth::user()->position->nama_jabatan == "Kepala Seksi Penjamin Kualitas Data")
         @foreach ($letters as $letter)
             <div class="row">
                 <div class="col-md-12">

@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="">Download Template Import Wajib Pajak</div>
+                            <div class="">Download Template Import/Import Update Wajib Pajak</div>
                             <div class="my-3">
                                 <a href="{{ route('template.download.wajib-pajak') }}" class="btn btn-block btn-primary">
                                     <i class="fas fa-download"></i> Download
@@ -71,14 +71,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="">Download Template Import Seluruh SP2DK</div>
                             <div class="my-3">
                                 <a href="{{ route('template.download.all-sp2dk') }}" class="btn btn-block btn-primary">
                                     <i class="fas fa-download"></i> Download
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <div class="">Download Template Registrasi Pengguna</div>
                             <div class="my-3">
